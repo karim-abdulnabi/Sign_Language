@@ -1,0 +1,15 @@
+pickle
+cv2
+mediapipe 
+numpy 
+pyttsx3
+streamlit 
+io
+PIL 
+translate 
+time
+speech_recognition 
+PIL 
+requests
+youtube_dl
+re
