@@ -3,11 +3,9 @@ mediapipe
 numpy 
 pyttsx3
 streamlit 
-io
-translate 
-time
-speech_recognition 
-pillow 
+translate==4.0.0
+speech_recognition
+Pillow
 requests
 youtube_dl
-re
+
