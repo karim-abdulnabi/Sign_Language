@@ -23,7 +23,7 @@ Follow these steps to set up and run the Streamlit app locally:
 - Explore additional features in the sidebar, such as text translation and speech recognition.
 
 ## Demo
-![App Demo]([url_to_demo_gif_or_screenshot](https://blog.roboflow.com/content/images/2020/10/sign-language-lead.gif))
+![App Demo](https://blog.roboflow.com/content/images/2020/10/sign-language-lead.gif)
 
 
 ## Contact
