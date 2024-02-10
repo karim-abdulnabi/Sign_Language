@@ -25,11 +25,6 @@ Follow these steps to set up and run the Streamlit app locally:
 ## Demo
 ![App Demo]([url_to_demo_gif_or_screenshot](https://blog.roboflow.com/content/images/2020/10/sign-language-lead.gif))
 
-## Contributing
-If you'd like to contribute to this project, please follow our [contribution guidelines](CONTRIBUTING.md).
-
-## License
-This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 For any inquiries or feedback, please contact [karim] via email at [karimabdulnabi999@gmail.com].
