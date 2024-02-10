@@ -15,7 +15,6 @@ import requests
 import youtube_dl
 import re
 
-#pip install opencv-python
 
 
 sign_start_time = 0
