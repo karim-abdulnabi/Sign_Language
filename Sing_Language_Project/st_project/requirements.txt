@@ -4,7 +4,7 @@ numpy
 pyttsx3
 streamlit 
 translate
-speech_recognition
+speech_recognition==3.8.1
 Pillow
 requests
 youtube_dl
