@@ -1,4 +1,3 @@
-pickle
 cv2
 mediapipe 
 numpy 
