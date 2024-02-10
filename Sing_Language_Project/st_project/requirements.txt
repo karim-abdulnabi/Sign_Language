@@ -9,7 +9,7 @@ PIL
 translate 
 time
 speech_recognition 
-PIL 
+pillow 
 requests
 youtube_dl
 re
