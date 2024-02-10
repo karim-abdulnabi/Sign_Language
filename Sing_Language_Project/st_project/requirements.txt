@@ -3,7 +3,7 @@ mediapipe
 numpy 
 pyttsx3
 streamlit 
-translate==4.0.0
+translate
 speech_recognition
 Pillow
 requests
