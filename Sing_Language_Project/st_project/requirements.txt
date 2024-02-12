@@ -8,3 +8,4 @@ translate==3.5.0
 SpeechRecognition==3.8.1
 requests
 youtube_dl==2021.6.6
+libgl1-mesa-glx
