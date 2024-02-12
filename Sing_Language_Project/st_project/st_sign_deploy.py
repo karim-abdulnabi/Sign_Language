@@ -1,4 +1,5 @@
 #Install libraries 🏗️
+!pip install opencv-python-headless==4.5.3.56
 import pickle
 import cv2
 import mediapipe as mp
