@@ -1,4 +1,4 @@
-opencv-python==4.5.3
+opencv-python
 mediapipe==0.8.5
 numpy==1.21.0
 pyttsx3==2.90
@@ -8,5 +8,3 @@ translate==3.5.0
 SpeechRecognition==3.8.1
 requests==2.26.0
 youtube_dl==2021.6.6
-
-
