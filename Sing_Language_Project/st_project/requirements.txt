@@ -3,5 +3,6 @@ numpy
 pyttsx3
 streamlit
 translate
+opencv-python
 
 
