@@ -1,11 +1,8 @@
 opencv-python==4.5.3.56
-mediapipe 
-numpy 
+mediapipe
+numpy
 pyttsx3
-streamlit 
+streamlit
 translate
-speech_recognition==3.8.0
-Pillow
-requests
-youtube_dl
+
 
