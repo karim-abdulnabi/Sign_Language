@@ -3,6 +3,5 @@ numpy
 pyttsx3
 streamlit
 translate
-opencv-python
-
+opencv-python==4.5.3
 
