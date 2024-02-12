@@ -1,5 +1,5 @@
 opencv-python
-mediapipe==0.8.5
+mediapipe==0.10.9  # Replace with an available version
 numpy==1.21.0
 pyttsx3==2.90
 streamlit==1.31.1
