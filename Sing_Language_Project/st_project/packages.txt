@@ -1,9 +1,0 @@
-libsdl2-mixer-2.0-0
-freeglut3-dev
-libgtk2.0-dev
-libgl1-mesa-glx
-ffmpeg
-libsm6
-libxext6
-libxrender1
-libfontconfig1
