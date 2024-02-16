@@ -2,7 +2,4 @@ numpy
 opencv-python-headless
 mediapipe 
 pyttsx3
-translate
-SpeechRecognition
-requests
-youtube_dl
+
