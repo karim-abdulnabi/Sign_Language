@@ -1,3 +1,8 @@
 numpy
-opencv-python-contrib-headless.
-mediapipe
+pandas
+streamlit
+streamlit_webrtc==0.47.
+0av==10.0.
+0deepface==0.0.75
+mediapipe==0.9.0.1
+tensorflow-cpu==2.13.0
