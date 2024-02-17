@@ -5,3 +5,4 @@ mediapipe
 tensorflow-cpu
 pyttsx3
 translate
+speech_recognition
