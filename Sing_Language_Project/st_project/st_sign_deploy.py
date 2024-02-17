@@ -65,8 +65,8 @@ if 'recognized_word' not in st.session_state:
 
 # Initialize the TTS engine
 def initialize_tts_engine():
-    if not hasattr(st.session_state, "tts_engine"):
-        st.session_state.tts_engine = pyttsx3.init()
+    #if not hasattr(st.session_state, "tts_engine"):
+    st.session_state.tts_engine = pyttsx3.init()
 
 # Initialize the TTS engine at the beginning of the app
 initialize_tts_engine()
