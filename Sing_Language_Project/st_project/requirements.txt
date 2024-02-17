@@ -1,8 +1,8 @@
 numpy
 pandas
 streamlit
-streamlit_webrtc
+streamlit_webrtc==0.47.0
 av==10.0.0
-0deepface
-mediapipe
-tensorflow-cpu
+deepface==0.0.75
+mediapipe==0.9.0.1
+tensorflow-cpu==2.13.0
