@@ -1,6 +1,0 @@
-numpy
-opencv-contrib-python-headless
-streamlit_webrtc
-av
-deepface
-tensorflow-cpu
