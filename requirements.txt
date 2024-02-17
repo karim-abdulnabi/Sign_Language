@@ -6,4 +6,4 @@ tensorflow-cpu
 pyttsx3==2.90
 translate==3.6.1
 SpeechRecognition
-
+youtube_dl
