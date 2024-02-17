@@ -1,8 +1,8 @@
-numpy==1.21.2
-streamlit_webrtc==0.34.0
-av==8.0.3
+numpy
+streamlit_webrtc
+av
 mediapipe
-tensorflow-cpu==2.6.0
+tensorflow-cpu
 pyttsx3==2.90
 translate==3.6.1
 speech_recognition
