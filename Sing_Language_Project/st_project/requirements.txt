@@ -2,7 +2,7 @@ numpy
 pandas
 streamlit
 streamlit_webrtc
-0av
+av==10.0.0
 0deepface
 mediapipe
 tensorflow-cpu
