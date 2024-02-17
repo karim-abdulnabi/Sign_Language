@@ -5,4 +5,4 @@ mediapipe
 tensorflow-cpu
 pyttsx3
 translate
-speech_recognition==3.8.1
+speech_recognition
