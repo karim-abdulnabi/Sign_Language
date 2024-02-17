@@ -1,5 +1,0 @@
-numpy
-streamlit_webrtc
-av
-mediapipe
-tensorflow-cpu
