@@ -8,3 +8,4 @@ translate==3.6.1
 SpeechRecognition
 youtube_dl
 scikit-learn
+comtypes
