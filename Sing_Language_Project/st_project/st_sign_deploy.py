@@ -124,7 +124,7 @@ if remove_last_button:
 save_button = st.sidebar.button("Save Text 📥")
 
 #####
-
+"""
 # Add a button for speech recognition
 speech_recognition_button = st.sidebar.button("Start Speech Recognition 🗣️")
 
@@ -151,7 +151,7 @@ def perform_speech_recognition():
 # Check if the speech recognition button is clicked
 if speech_recognition_button:
     perform_speech_recognition()
-
+"""
 
 #####
 # Initialize a variable to store the saved text
