@@ -66,7 +66,12 @@ if 'recognized_word' not in st.session_state:
 # Initialize the TTS engine
 def initialize_tts_engine():
     try:
-        st.session_state.tts_engine = pyttsx3.init('sapi5')
+        if platform.system() == 'Windows':
+            # Use SAPI5 as the text-to-speech engine on Windows
+            st.session_state.tts_engine = pyttsx3.init('sapi5')
+        else:
+            # Use the default text-to-speech engine for non-Windows platforms
+            st.session_state.tts_engine = pyttsx3.init()
     except Exception as e:
         st.error(f"Error initializing text-to-speech engine: {e}")
       
