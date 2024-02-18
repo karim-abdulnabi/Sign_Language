@@ -66,7 +66,9 @@ if 'recognized_word' not in st.session_state:
 # Initialize the TTS engine
 def initialize_tts_engine():
     try:
-        st.session_state.tts_engine = pyttsx3.init()
+        if st._is_running_with_streamlit:
+            # Check if running in Streamlit to avoid conflicts during testing
+            st.session_state.tts_engine = pyttsx3.init('sapi5')
     except Exception as e:
         st.error(f"Error initializing text-to-speech engine: {e}")
       
