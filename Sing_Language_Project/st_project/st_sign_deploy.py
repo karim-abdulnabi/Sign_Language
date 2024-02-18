@@ -67,7 +67,7 @@ if 'recognized_word' not in st.session_state:
 def initialize_tts_engine():
     try:
         if platform.system() == 'Windows':
-            st.session_state.tts_engine = pyttsx3.init(driverName='espeak', executable=r'C:\Program Files (x86)\eSpeak\espeakedit.exe')
+            st.session_state.tts_engine = pyttsx3.init(driverName='espeak')
         else:
             st.session_state.tts_engine = pyttsx3.init()
     except Exception as e:
