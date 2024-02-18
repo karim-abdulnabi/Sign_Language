@@ -82,9 +82,7 @@ video_frame = st.empty()
 # Create a button to start the camera
 start_camera_button = st.sidebar.button("Start Camera 📷")
 
-# Call the start_camera function when the "Start Camera" button is clicked
-if start_camera_button:
-    start_camera()
+
 
 # Create a sidebar for buttons on the left side
 st.sidebar.header("Actions 🛠️")
@@ -280,7 +278,9 @@ def start_camera():
         video_frame.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
         recognized_text.text(f"Recognized Character: {st.session_state.recognized_word}")
     
-    
+# Call the start_camera function when the "Start Camera" button is clicked
+if start_camera_button:
+    start_camera()    
 
 # Close the video capture and the app
 cap.release()
