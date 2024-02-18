@@ -69,7 +69,7 @@ def initialize_tts_engine():
         if platform.system() == 'Windows':
             st.session_state.tts_engine = pyttsx3.init()
         else:
-            st.session_state.tts_engine = pyttsx3.init(driverName='espeak')
+            st.session_state.tts_engine = pyttsx3.init(driverName='espeak' , executable=', executable='/usr/bin/espeak'')
     except Exception as e:
         st.error(f"Error initializing text-to-speech engine: {e}")
       
