@@ -82,6 +82,10 @@ video_frame = st.empty()
 # Create a button to start the camera
 start_camera_button = st.sidebar.button("Start Camera 📷")
 
+# Call the start_camera function when the "Start Camera" button is clicked
+if start_camera_button:
+    start_camera()
+
 # Create a sidebar for buttons on the left side
 st.sidebar.header("Actions 🛠️")
 
