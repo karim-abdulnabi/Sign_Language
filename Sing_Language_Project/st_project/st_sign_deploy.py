@@ -15,7 +15,7 @@ import requests
 import youtube_dl
 import re
 import platform
-
+import threading
 
 
 
@@ -263,9 +263,11 @@ def start_camera():
         recognized_text.text(f"Recognized Character: {st.session_state.recognized_word}")
         time.sleep(0.1)  # Sleep to control the frame rate
     
-# Use st.experimental_run_async() to run the camera loop in the background
+# Use threading to start the camera function in the background
 if start_camera_button:
-    st.experimental_run_async(start_camera)
+    # Create a thread and start the camera function
+    camera_thread = threading.Thread(target=start_camera)
+    camera_thread.start()
 
 # Close the video capture and the app
 #cap.release()
