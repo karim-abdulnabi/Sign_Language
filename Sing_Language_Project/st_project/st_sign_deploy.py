@@ -263,9 +263,9 @@ def start_camera():
         recognized_text.text(f"Recognized Character: {st.session_state.recognized_word}")
         time.sleep(0.1)  # Sleep to control the frame rate
     
-# Use st.frame() to run the camera loop in the background
+# Use st.experimental_run_async() to run the camera loop in the background
 if start_camera_button:
-    st.frame(start_camera)  
+    st.experimental_run_async(start_camera)
 
 # Close the video capture and the app
 #cap.release()
