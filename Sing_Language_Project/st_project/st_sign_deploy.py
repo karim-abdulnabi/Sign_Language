@@ -65,8 +65,13 @@ if 'recognized_word' not in st.session_state:
 
 # Initialize the TTS engine
 def initialize_tts_engine():
-    if not hasattr(st.session_state, "tts_engine"):
-        st.session_state.tts_engine = pyttsx3.init()
+    try:
+        if platform.system() == 'Windows':
+            st.session_state.tts_engine = pyttsx3.init()
+        else:
+            st.session_state.tts_engine = pyttsx3.init('espeak')
+    except Exception as e:
+        st.error(f"Error initializing text-to-speech engine: {e}")
       
 # Initialize the TTS engine at the beginning of the app
 initialize_tts_engine()
