@@ -80,13 +80,13 @@ previous_character = ""
 # Checkbox to toggle the camera
 show_camera_checkbox = st.sidebar.checkbox("Show Camera 🎥", key="show_camera")
 
-# Check if the checkbox is clicked
-if show_camera_checkbox:
-    st.session_state.show_camera = True
-else:
+# Initialize Streamlit session state
+if 'recognized_word' not in st.session_state:
+    st.session_state.recognized_word = ""
+if 'show_camera' not in st.session_state:
     st.session_state.show_camera = False
 
-# ... (your button and logic setup)
+
 
 # Start the camera capture if the checkbox is checked
 if st.session_state.show_camera:
