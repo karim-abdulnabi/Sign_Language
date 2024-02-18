@@ -77,11 +77,10 @@ sign_start_time = 0
 sign_timeout = 1.25
 previous_character = ""
 
-# Checkbox to toggle the camera
-show_camera_checkbox = st.sidebar.checkbox("Show Camera 🎥", key="show_camera")
+
 
 # Create a checkbox to show/hide the camera
-show_camera = st.checkbox("Show Camera", key="show_camera")
+show_camera = st.checkbox("Show Camera")
 
 
 
