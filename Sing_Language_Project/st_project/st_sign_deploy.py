@@ -77,77 +77,89 @@ sign_start_time = 0
 sign_timeout = 1.25
 previous_character = ""
 
-# Start the camera capture
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+# Checkbox to toggle the camera
+show_camera_checkbox = st.sidebar.checkbox("Show Camera 🎥", key="show_camera")
 
-# Main application loop
-while True:
-    ret, frame = cap.read()
+# Check if the checkbox is clicked
+if show_camera_checkbox:
+    st.session_state.show_camera = True
+else:
+    st.session_state.show_camera = False
 
-    if not ret:
-        # Video capture failed, wait and try again
-        continue
+# ... (your button and logic setup)
 
-    H, W, _ = frame.shape
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+# Start the camera capture if the checkbox is checked
+if st.session_state.show_camera:
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
-    results = hands.process(frame_rgb)
-    if results.multi_hand_landmarks:
-        for hand_landmarks in results.multi_hand_landmarks:
-            mp_drawing.draw_landmarks(
-                frame,
-                hand_landmarks,
-                mp_hands.HAND_CONNECTIONS,
-                mp_drawing_styles.get_default_hand_landmarks_style(),
-                mp_drawing_styles.get_default_hand_connections_style())
-
-        data_aux = []
-        x_ = []
-        y_ = []
-
-        for hand_landmarks in results.multi_hand_landmarks:
-            for i in range(len(hand_landmarks.landmark)):
-                x = hand_landmarks.landmark[i].x
-                y = hand_landmarks.landmark[i].y
-
-                x_.append(x)
-                y_.append(y)
-
-            for i in range(len(hand_landmarks.landmark)):
-                x = hand_landmarks.landmark[i].x
-                y = hand_landmarks.landmark[i].y
-                data_aux.append(x - min(x_))
-                data_aux.append(y - min(y_))
-
-        x1 = int(min(x_) * W) - 10
-        y1 = int(min(y_) * H) - 10
-
-        x2 = int(max(x_) * W) - 10
-        y2 = int(max(y_) * H) - 10
-
-        prediction = model.predict([np.asarray(data_aux)])
-
-        predicted_character = labels_dict[int(prediction[0])]
-
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
-        cv2.putText(frame, predicted_character, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
-
-        if predicted_character == previous_character:
-            if sign_start_time is None:
-                sign_start_time = time.time()
+    # Main application loop
+    while True:
+        ret, frame = cap.read()
+    
+        if not ret:
+            # Video capture failed, wait and try again
+            continue
+    
+        H, W, _ = frame.shape
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    
+        results = hands.process(frame_rgb)
+        if results.multi_hand_landmarks:
+            for hand_landmarks in results.multi_hand_landmarks:
+                mp_drawing.draw_landmarks(
+                    frame,
+                    hand_landmarks,
+                    mp_hands.HAND_CONNECTIONS,
+                    mp_drawing_styles.get_default_hand_landmarks_style(),
+                    mp_drawing_styles.get_default_hand_connections_style())
+    
+            data_aux = []
+            x_ = []
+            y_ = []
+    
+            for hand_landmarks in results.multi_hand_landmarks:
+                for i in range(len(hand_landmarks.landmark)):
+                    x = hand_landmarks.landmark[i].x
+                    y = hand_landmarks.landmark[i].y
+    
+                    x_.append(x)
+                    y_.append(y)
+    
+                for i in range(len(hand_landmarks.landmark)):
+                    x = hand_landmarks.landmark[i].x
+                    y = hand_landmarks.landmark[i].y
+                    data_aux.append(x - min(x_))
+                    data_aux.append(y - min(y_))
+    
+            x1 = int(min(x_) * W) - 10
+            y1 = int(min(y_) * H) - 10
+    
+            x2 = int(max(x_) * W) - 10
+            y2 = int(max(y_) * H) - 10
+    
+            prediction = model.predict([np.asarray(data_aux)])
+    
+            predicted_character = labels_dict[int(prediction[0])]
+    
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
+            cv2.putText(frame, predicted_character, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
+    
+            if predicted_character == previous_character:
+                if sign_start_time is None:
+                    sign_start_time = time.time()
+                else:
+                    current_time = time.time()
+                    if current_time - sign_start_time >= sign_timeout:
+                        st.session_state.recognized_word += predicted_character
+                        sign_start_time = None
             else:
-                current_time = time.time()
-                if current_time - sign_start_time >= sign_timeout:
-                    st.session_state.recognized_word += predicted_character
-                    sign_start_time = None
-        else:
-            sign_start_time = None
-
-        previous_character = predicted_character
-
-    # Convert the frame to bytes
-    frame_bytes = cv2.imencode('.jpg', frame)[1].tobytes()
-
-    # Update the video feed and recognized character using Streamlit
-    st.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
-    st.text(f"Recognized Character: {st.session_state.recognized_word}")
+                sign_start_time = None
+    
+            previous_character = predicted_character
+    
+        # Convert the frame to bytes
+        frame_bytes = cv2.imencode('.jpg', frame)[1].tobytes()
+    
+        # Update the video feed and recognized character using Streamlit
+        st.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
+        st.text(f"Recognized Character: {st.session_state.recognized_word}")
