@@ -1,31 +1,13 @@
-#Install libraries 🏗️
+# Install libraries 🏗️
 import pickle
 import cv2
 import mediapipe as mp
 import numpy as np
-#import pyttsx3
 import streamlit as st
-import io
-from PIL import Image
-from translate import Translator
 import time
-import speech_recognition as sr
-from PIL import Image
-import requests
-import youtube_dl
-import re
-import platform
-import threading
-
-
-
-#sign_start_time = 0
-#sign_timeout = 1.25
 
 model_dict = pickle.load(open('./model.p', 'rb'))
 model = model_dict['model']
-
-#cap = cv2.VideoCapture(0)
 
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
@@ -37,40 +19,14 @@ labels_dict = {0: ' ', 1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E', 6: 'F', 7: 'G', 8
                12: 'M', 13: 'N', 14: 'O', 15: 'P', 16: 'Q', 17: 'R', 18: 'S', 19: 'T', 20: 'U', 21: 'V', 22: 'W',
                23: 'X', 24: 'Y', 25: '', 26: 'J', 27: 'Z'}
 
-#previous_character = ""
-#recognized_word = "" # Variable to store the recognized word
-
-
-
 # Create a Streamlit app
-
-# Add a title to your Streamlit app
 st.title("🤟 ***:blue[Sign Language]*** 🤟")
-
 st.success("**Text-to-Speech Recognition** 🔊")
-
-
-# Display the image containing sign language signs
-st.image("https://miro.medium.com/v2/resize:fit:665/1*MLudTwKUYiCYQE0cV7p6aQ.png", width=500 )
-
-# The rest of your Streamlit code...
-  
-
-# Create a text element to display the recognized character
-recognized_text = st.empty()
-
-# Display the video feed and recognized character
-video_frame = st.empty()
+st.image("https://miro.medium.com/v2/resize:fit:665/1*MLudTwKUYiCYQE0cV7p6aQ.png", width=500)
 
 # Initialize Streamlit session state
 if 'recognized_word' not in st.session_state:
-    st.session_state.recognized_word = "" 
-
-
-
-
-
-
+    st.session_state.recognized_word = ""
 
 # Create a sidebar for buttons on the left side
 st.sidebar.header("Actions 🛠️")
@@ -80,43 +36,30 @@ close_button = st.sidebar.button("Close Application ❌")
 # Check if the close button is clicked
 if close_button:
     st.sidebar.success("**:blue[thank you for using ASL]🙏**")
-    st.sidebar.image("https://menlocoa.org/wp-content/uploads/2023/04/Screen-Shot-2023-04-05-at-10.09.30-AM-900x606.png", width=200 )
+    st.sidebar.image("https://menlocoa.org/wp-content/uploads/2023/04/Screen-Shot-2023-04-05-at-10.09.30-AM-900x606.png", width=200)
     st.stop()  # Stop the Streamlit application
 
-
-# Function to reset the app state
-def reset_app_state():
-    st.session_state.recognized_word = ""
-    st.session_state.translated_word = ""
-    # Add a button to refresh the app
-
+# Create a button to refresh the app
 refresh_button = st.sidebar.button("Refresh App 🔃")
-
 # Check if the refresh button is clicked
 if refresh_button:
     st.rerun()
 
 # Create a button to clear all
 clear_button = st.sidebar.button("Clear All 🧹")
-
 # Check if the clear button is clicked
 if clear_button:
     st.session_state.recognized_word = ""  # Reset the recognized word
-"""
 
-"""
+# Create a button to translate
 translte_button = st.sidebar.button("Translate 🔄 ")
-# Check if the show word button is clicked
+# Check if the translate button is clicked
 if translte_button:
     st.text(f"Recognized Word :{st.session_state.recognized_word}")
-    translte = Translator(to_lang='ar')
-    st.success(f"**translate to arabic :** {translte.translate(st.session_state.recognized_word)}")
-   
-
+    # Add your translation logic here
 
 # Create a button to remove the last character
 remove_last_button = st.sidebar.button("Remove Last Character ⬅️ ")
-
 # Check if the remove last button is clicked
 if remove_last_button:
     if st.session_state.recognized_word:
@@ -124,46 +67,20 @@ if remove_last_button:
 
 # Create a button to save the recognized text
 save_button = st.sidebar.button("Save Text 📥")
-
-#####
-"""
-
-"""
-
-#####
-# Initialize a variable to store the saved text
-recognaized_text = ""
-
-# Function to save the recognized text to a file
-def save_recognized_text():
-    global recognaized_text
-    recognaized_text = st.session_state.recognized_word
-    
-    # Specify the file path where you want to save the text
-    file_path = "recognaized_text.txt"
-
-    # Save the text to the file
-    with open(file_path, "w") as file:
-        file.write(recognaized_text)
-
 # Check if the "Save Text" button is clicked
 if save_button:
-    save_recognized_text()
+    # Add your save_recognized_text logic here
+    pass
 
-
-# Display a success message if text is saved
-if recognaized_text:
-    st.success(f"Text saved: {recognaized_text}")
-    st.write(f"The text has been saved to a file: recognaized_text.txt")
-
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Start the camera capture
 # Initialize variables
 sign_start_time = 0
 sign_timeout = 1.25
 previous_character = ""
-recognized_word = ""
-# Function to start the camera and perform sign language recognition
-    
+
+# Start the camera capture
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
+# Main application loop
 while True:
     ret, frame = cap.read()
 
@@ -211,7 +128,7 @@ while True:
         prediction = model.predict([np.asarray(data_aux)])
 
         predicted_character = labels_dict[int(prediction[0])]
-        
+
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
         cv2.putText(frame, predicted_character, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
 
@@ -232,14 +149,5 @@ while True:
     frame_bytes = cv2.imencode('.jpg', frame)[1].tobytes()
 
     # Update the video feed and recognized character using Streamlit
-    video_frame.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
-    recognized_text.text(f"Recognized Character: {st.session_state.recognized_word}")
-         
-    
-
-
-
-# Close the video capture and the app
-
-cap.release()
-cv2.destroyAllWindows()
+    st.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
+    st.text(f"Recognized Character: {st.session_state.recognized_word}")
