@@ -125,32 +125,7 @@ save_button = st.sidebar.button("Save Text 📥")
 
 #####
 """
-# Add a button for speech recognition
-speech_recognition_button = st.sidebar.button("Start Speech Recognition 🗣️")
 
-# Initialize the recognizer
-recognizer = sr.Recognizer()
-
-# Function to perform speech recognition
-def perform_speech_recognition():
-    with sr.Microphone() as source:
-        st.sidebar.write("Speak something...")
-        recognizer.adjust_for_ambient_noise(source)
-        audio = recognizer.listen(source)
-    
-    try:
-        recognized_speech = recognizer.recognize_google(audio)  # You can choose a different recognizer if needed
-        st.sidebar.write(f"Recognized Speech: {recognized_speech}")
-        st.session_state.recognized_word += recognized_speech  # Append the recognized speech to the text
-    
-    except sr.UnknownValueError:
-        st.sidebar.write("Could not understand the audio")
-    except sr.RequestError as e:
-        st.sidebar.write(f"Error: {e}")
-
-# Check if the speech recognition button is clicked
-if speech_recognition_button:
-    perform_speech_recognition()
 """
 
 #####
