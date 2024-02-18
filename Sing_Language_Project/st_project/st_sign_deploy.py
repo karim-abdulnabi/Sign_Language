@@ -79,8 +79,15 @@ previous_character = ""
 
 
 
+# Initialize Streamlit session state
+if 'show_camera' not in st.session_state:
+    st.session_state.show_camera = False
+
 # Create a checkbox to show/hide the camera
 show_camera = st.checkbox("Show Camera")
+
+# Update the session state when the checkbox is toggled
+st.session_state.show_camera = show_camera
 
 
 
