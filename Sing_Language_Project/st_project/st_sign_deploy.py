@@ -227,10 +227,12 @@ while True:
     # Update the video feed and recognized character using Streamlit
     video_frame.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
     recognized_text.text(f"Recognized Character: {st.session_state.recognized_word}")
-        
+    time.sleep(0.1)  # Sleep to control the frame rate   
     
 
-
+# Start the camera function in the background
+camera_thread = threading.Thread(target=start_camera)
+camera_thread.start()
 # Close the video capture and the app
 #cap.release()
 #cv2.destroyAllWindows()
