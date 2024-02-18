@@ -283,5 +283,5 @@ if start_camera_button:
     start_camera()    
 
 # Close the video capture and the app
-cap.release()
-cv2.destroyAllWindows()
+#cap.release()
+#cv2.destroyAllWindows()
