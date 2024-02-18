@@ -79,6 +79,9 @@ initialize_tts_engine()
 # Display the video feed and recognized character
 video_frame = st.empty()
 
+# Create a button to start the camera
+start_camera_button = st.sidebar.button("Start Camera 📷")
+
 # Create a sidebar for buttons on the left side
 st.sidebar.header("Actions 🛠️")
 
@@ -198,79 +201,80 @@ if recognaized_text:
     st.write(f"The text has been saved to a file: recognaized_text.txt")
 
 
+# Function to start the camera and perform sign language recognition
+def start_camera():
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Start the camera capture
 
-cap = cv2.VideoCapture(0 , cv2.CAP_DSHOW)  # Start the camera capture
+    while True:
+        ret, frame = cap.read()
 
-while True:
-    ret, frame = cap.read()
+        if not ret:
+            # Video capture failed, wait and try again
+            continue
 
-    if not ret:
-        # Video capture failed, wait and try again
-        continue
+        H, W, _ = frame.shape
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    H, W, _ = frame.shape
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = hands.process(frame_rgb)
+        if results.multi_hand_landmarks:
+            for hand_landmarks in results.multi_hand_landmarks:
+                mp_drawing.draw_landmarks(
+                    frame,
+                    hand_landmarks,
+                    mp_hands.HAND_CONNECTIONS,
+                    mp_drawing_styles.get_default_hand_landmarks_style(),
+                    mp_drawing_styles.get_default_hand_connections_style())
 
-    results = hands.process(frame_rgb)
-    if results.multi_hand_landmarks:
-        for hand_landmarks in results.multi_hand_landmarks:
-            mp_drawing.draw_landmarks(
-                frame,
-                hand_landmarks,
-                mp_hands.HAND_CONNECTIONS,
-                mp_drawing_styles.get_default_hand_landmarks_style(),
-                mp_drawing_styles.get_default_hand_connections_style())
+            data_aux = []
+            x_ = []
+            y_ = []
 
-        data_aux = []
-        x_ = []
-        y_ = []
+            for hand_landmarks in results.multi_hand_landmarks:
+                for i in range(len(hand_landmarks.landmark)):
+                    x = hand_landmarks.landmark[i].x
+                    y = hand_landmarks.landmark[i].y
 
-        for hand_landmarks in results.multi_hand_landmarks:
-            for i in range(len(hand_landmarks.landmark)):
-                x = hand_landmarks.landmark[i].x
-                y = hand_landmarks.landmark[i].y
+                    x_.append(x)
+                    y_.append(y)
 
-                x_.append(x)
-                y_.append(y)
+                for i in range(len(hand_landmarks.landmark)):
+                    x = hand_landmarks.landmark[i].x
+                    y = hand_landmarks.landmark[i].y
+                    data_aux.append(x - min(x_))
+                    data_aux.append(y - min(y_))
 
-            for i in range(len(hand_landmarks.landmark)):
-                x = hand_landmarks.landmark[i].x
-                y = hand_landmarks.landmark[i].y
-                data_aux.append(x - min(x_))
-                data_aux.append(y - min(y_))
+            x1 = int(min(x_) * W) - 10
+            y1 = int(min(y_) * H) - 10
 
-        x1 = int(min(x_) * W) - 10
-        y1 = int(min(y_) * H) - 10
+            x2 = int(max(x_) * W) - 10
+            y2 = int(max(y_) * H) - 10
 
-        x2 = int(max(x_) * W) - 10
-        y2 = int(max(y_) * H) - 10
+            prediction = model.predict([np.asarray(data_aux)])
 
-        prediction = model.predict([np.asarray(data_aux)])
+            predicted_character = labels_dict[int(prediction[0])]
+            
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
+            cv2.putText(frame, predicted_character, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
 
-        predicted_character = labels_dict[int(prediction[0])]
-        
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
-        cv2.putText(frame, predicted_character, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
-
-        if predicted_character == previous_character:
-            if sign_start_time is None:
-                sign_start_time = time.time()
+            if predicted_character == previous_character:
+                if sign_start_time is None:
+                    sign_start_time = time.time()
+                else:
+                    current_time = time.time()
+                    if current_time - sign_start_time >= sign_timeout:
+                        st.session_state.recognized_word += predicted_character
+                        sign_start_time = None
             else:
-                current_time = time.time()
-                if current_time - sign_start_time >= sign_timeout:
-                    st.session_state.recognized_word += predicted_character
-                    sign_start_time = None
-        else:
-            sign_start_time = None
+                sign_start_time = None
 
-        previous_character = predicted_character
+            previous_character = predicted_character
 
-    # Convert the frame to bytes
-    frame_bytes = cv2.imencode('.jpg', frame)[1].tobytes()
+        # Convert the frame to bytes
+        frame_bytes = cv2.imencode('.jpg', frame)[1].tobytes()
 
-    # Update the video feed and recognized character using Streamlit
-    video_frame.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
-    recognized_text.text(f"Recognized Character: {st.session_state.recognized_word}")
+        # Update the video feed and recognized character using Streamlit
+        video_frame.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
+        recognized_text.text(f"Recognized Character: {st.session_state.recognized_word}")
     
     
 
