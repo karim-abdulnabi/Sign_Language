@@ -3,7 +3,7 @@ import pickle
 import cv2
 import mediapipe as mp
 import numpy as np
-import pyttsx3
+#import pyttsx3
 import streamlit as st
 import io
 from PIL import Image
@@ -86,10 +86,10 @@ start_camera_button = st.sidebar.button("Start Camera 📷")
 
 # Create a sidebar for buttons on the left side
 st.sidebar.header("Actions 🛠️")
-
+"""
 # Initialize the text-to-speech engine
 engine = pyttsx3.init()
-
+"""
 # Create buttons
 close_button = st.sidebar.button("Close Application ❌")
 # Check if the close button is clicked
