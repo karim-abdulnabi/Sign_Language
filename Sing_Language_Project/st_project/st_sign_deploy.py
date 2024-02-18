@@ -62,7 +62,7 @@ recognized_text = st.empty()
 # Initialize Streamlit session state
 if 'recognized_word' not in st.session_state:
     st.session_state.recognized_word = "" 
-
+"""
 # Initialize the TTS engine
 def initialize_tts_engine():
     try:
@@ -75,7 +75,7 @@ def initialize_tts_engine():
       
 # Initialize the TTS engine at the beginning of the app
 initialize_tts_engine()
-
+"""
 # Display the video feed and recognized character
 video_frame = st.empty()
 
@@ -117,7 +117,7 @@ clear_button = st.sidebar.button("Clear All 🧹")
 # Check if the clear button is clicked
 if clear_button:
     st.session_state.recognized_word = ""  # Reset the recognized word
-
+"""
 # Create a button to speak the recognized text
 speak_button = st.sidebar.button("Speak Recognized Text 🔊")
 
@@ -125,7 +125,7 @@ speak_button = st.sidebar.button("Speak Recognized Text 🔊")
 if speak_button:
     engine.say(st.session_state.recognized_word)
     engine.runAndWait()
-
+"""
 translte_button = st.sidebar.button("Translate 🔄 ")
 # Check if the show word button is clicked
 if translte_button:
