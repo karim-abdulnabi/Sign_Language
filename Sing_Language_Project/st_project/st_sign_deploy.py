@@ -62,20 +62,10 @@ recognized_text = st.empty()
 # Initialize Streamlit session state
 if 'recognized_word' not in st.session_state:
     st.session_state.recognized_word = "" 
-"""
-# Initialize the TTS engine
-def initialize_tts_engine():
-    try:
-        if platform.system() == 'Windows':
-            st.session_state.tts_engine = pyttsx3.init(driverName='espeak')
-        else:
-            st.session_state.tts_engine = pyttsx3.init()
-    except Exception as e:
-        st.error(f"Error initializing text-to-speech engine: {e}")
-      
-# Initialize the TTS engine at the beginning of the app
-initialize_tts_engine()
-"""
+
+
+
+
 # Display the video feed and recognized character
 video_frame = st.empty()
 
@@ -86,10 +76,10 @@ start_camera_button = st.sidebar.button("Start Camera 📷")
 
 # Create a sidebar for buttons on the left side
 st.sidebar.header("Actions 🛠️")
-"""
-# Initialize the text-to-speech engine
-engine = pyttsx3.init()
-"""
+
+
+
+
 # Create buttons
 close_button = st.sidebar.button("Close Application ❌")
 # Check if the close button is clicked
@@ -118,13 +108,7 @@ clear_button = st.sidebar.button("Clear All 🧹")
 if clear_button:
     st.session_state.recognized_word = ""  # Reset the recognized word
 """
-# Create a button to speak the recognized text
-speak_button = st.sidebar.button("Speak Recognized Text 🔊")
 
-# Check if the speak button is clicked
-if speak_button:
-    engine.say(st.session_state.recognized_word)
-    engine.runAndWait()
 """
 translte_button = st.sidebar.button("Translate 🔄 ")
 # Check if the show word button is clicked
