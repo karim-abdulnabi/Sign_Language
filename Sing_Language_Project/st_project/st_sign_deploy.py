@@ -262,9 +262,9 @@ def start_camera():
         video_frame.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
         recognized_text.text(f"Recognized Character: {st.session_state.recognized_word}")
     
-# Call the start_camera function when the "Start Camera" button is clicked
+# Use st.frame() to run the camera loop in the background
 if start_camera_button:
-    start_camera()    
+    st.frame(start_camera())   
 
 # Close the video capture and the app
 #cap.release()
