@@ -9,4 +9,4 @@ SpeechRecognition
 youtube_dl
 scikit-learn
 comtypes
-
+ffmpy 
