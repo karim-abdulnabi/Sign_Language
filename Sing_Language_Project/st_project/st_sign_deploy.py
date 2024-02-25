@@ -93,7 +93,7 @@ st.session_state.show_camera = show_camera
 
 # Start the camera capture if the checkbox is checked
 if st.session_state.show_camera:
-    cap = cv2.VideoCapture( cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture( )
 
     # Main application loop
     while True:
