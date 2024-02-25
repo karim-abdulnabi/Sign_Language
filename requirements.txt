@@ -1,5 +1,6 @@
 numpy
-streamlit_webrtc
+streamlit
+streamlit-webrtc
 av
 mediapipe
 tensorflow-cpu
