@@ -157,7 +157,7 @@ class HandsVideoTransformer(VideoTransformerBase):
     
         # Convert the frame to bytes
         frame_bytes = cv2.imencode('.jpg', frame)[1].tobytes()
-      return frame
+    return frame
 # Main application loop
 webrtc_ctx = webrtc_streamer(key="hands", video_transformer_factory=HandsVideoTransformer)
 
