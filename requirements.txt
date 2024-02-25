@@ -1,6 +1,6 @@
 numpy
-streamlit
-streamlit-webrtc
+streamlit==1.18.0
+streamlit-webrtc==0.28.0
 av
 mediapipe
 tensorflow-cpu
