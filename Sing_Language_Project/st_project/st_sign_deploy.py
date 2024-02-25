@@ -5,6 +5,7 @@ import mediapipe as mp
 import numpy as np
 import streamlit as st
 import time
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
 
 model_dict = pickle.load(open('./model.p', 'rb'))
 model = model_dict['model']
