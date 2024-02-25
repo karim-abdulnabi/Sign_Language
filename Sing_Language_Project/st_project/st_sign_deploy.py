@@ -161,14 +161,12 @@ class HandsVideoTransformer(VideoTransformerBase):
 # Main application loop
 webrtc_ctx = webrtc_streamer(key="hands", video_transformer_factory=HandsVideoTransformer)
 
-if webrtc_ctx.video_transformer:
-    while True:
-        if webrtc_ctx.video_transformer:  # Check if video_transformer is not None
-            video_frame = webrtc_ctx.video_transformer.get_frame()
+while True:
+    if webrtc_ctx.video_transformer and hasattr(webrtc_ctx.video_transformer, "get_frame"):
+        video_frame = webrtc_ctx.video_transformer.get_frame()
+        if video_frame is not None:
             st.image(video_frame, caption='Video Feed', use_column_width=True, channels="BGR")
             st.text(f"Recognized Character: {st.session_state.recognized_word}")
-    
-        # Update the video feed and recognized character using Streamlit
-        st.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
-        st.text(f"Recognized Character: {st.session_state.recognized_word}")
+    else:
+        break
 
