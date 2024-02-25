@@ -90,17 +90,21 @@ show_camera = st.checkbox("Show Camera")
 # Update the session state when the checkbox is toggled
 st.session_state.show_camera = show_camera
 
-# Define a VideoTransformer class to process video frames
-class HandsVideoTransformer(VideoTransformerBase):
-    def __init__(self):
-        self.sign_start_time = 0
-        self.sign_timeout = 1.25
-        self.previous_character = ""
+# Start the camera capture if the checkbox is checked
+if st.session_state.show_camera:
+    cap = cv2.VideoCapture( )
 
-    def transform(self, frame):
+    # Main application loop
+    while True:
+        ret, frame = cap.read()
+    
+        if not ret:
+            # Video capture failed, wait and try again
+            continue
+    
         H, W, _ = frame.shape
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
+    
         results = hands.process(frame_rgb)
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
@@ -157,16 +161,8 @@ class HandsVideoTransformer(VideoTransformerBase):
     
         # Convert the frame to bytes
         frame_bytes = cv2.imencode('.jpg', frame)[1].tobytes()
-        return frame
-# Main application loop
-webrtc_ctx = webrtc_streamer(key="hands", video_transformer_factory=HandsVideoTransformer)
-
-while True:
-    if webrtc_ctx.video_transformer and hasattr(webrtc_ctx.video_transformer, "get_frame"):
-        video_frame = webrtc_ctx.video_transformer.get_frame()
-        if video_frame is not None:
-            st.image(video_frame, caption='Video Feed', use_column_width=True, channels="BGR")
-            st.text(f"Recognized Character: {st.session_state.recognized_word}")
-    else:
-        break
+    
+        # Update the video feed and recognized character using Streamlit
+        st.image(frame_bytes, caption='Video Feed', use_column_width=True, channels="BGR")
+        st.text(f"Recognized Character: {st.session_state.recognized_word}")
 
