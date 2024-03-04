@@ -18,8 +18,8 @@ def main():
     webrtc_ctx = webrtc_streamer(
         key="example",
         video_transformer_factory=VideoTransformer,
-        mode=3,  # WebRTCMode.SENDRECV
-        async_transform=True,
+        mode="sendrecv",  # WebRTCMode.SENDRECV
+        async_processing=True,
     )
 
     if webrtc_ctx.video_transformer:
