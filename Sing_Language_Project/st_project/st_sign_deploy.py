@@ -81,17 +81,17 @@ previous_character = ""
 
 
 # Initialize Streamlit session state
-''' if 'show_camera' not in st.session_state:
+if 'show_camera' not in st.session_state:
     st.session_state.show_camera = False
 
 # Create a checkbox to show/hide the camera
 show_camera = st.checkbox("Show Camera")
 
 # Update the session state when the checkbox is toggled
-st.session_state.show_camera = show_camera '''
+st.session_state.show_camera = show_camera 
 
 # Start the camera capture if the checkbox is checked
-if True:
+if st.session_state.show_camera:
     cap = cv2.VideoCapture(0 , cv2.CAP_DSHOW )
 
     # Main application loop
