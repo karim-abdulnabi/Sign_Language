@@ -23,7 +23,7 @@ def main():
     )
 
     if webrtc_ctx.video_transformer:
-        st.image(webrtc_ctx.video_transformer.frame_out, channels="GRAY")
+        st.image()
 
 if __name__ == "__main__":
     main()
