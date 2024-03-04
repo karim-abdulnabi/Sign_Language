@@ -1,14 +1,38 @@
-from imutils.video import VideoStream
+import streamlit as st
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
+import cv2
+import numpy as np
 
-camera = VideoStream(src=VIDEO_SOURCE, framerate=FPS).start()
+# Define a VideoTransformer class to process video frames
+class VideoTransformer(VideoTransformerBase):
+    def __init__(self):
+        self.cap = cv2.VideoCapture(0)
 
-while True:
-    frame = camera.read()
-    np_array_RGB = opencv2matplotlib(frame)  # Convert to RGB
+    def transform(self, frame):
+        # Read a frame from the webcam
+        ret, img = self.cap.read()
 
-    image = Image.fromarray(np_array_RGB)  #  PIL image
-    byte_array = pil_image_to_byte_array(image)
-    client.publish(MQTT_TOPIC_CAMERA, byte_array, qos=MQTT_QOS)
-    now = get_now_string()
-    print(f"published frame on topic: {MQTT_TOPIC_CAMERA} at {now}")
-    time.sleep(1 / FPS)
+        # Perform any image processing if needed
+        # For example, you can convert the frame to grayscale
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # Return the processed frame
+        return gray
+
+# Streamlit app
+def main():
+    st.title("Webcam Video Recorder")
+
+    # Use webrtc_streamer to display the webcam feed and processed video
+    webrtc_ctx = webrtc_streamer(
+        key="example",
+        video_transformer_factory=VideoTransformer,
+        async_transform=True,
+    )
+
+    if webrtc_ctx.video_transformer:
+        # Display the processed video
+        st.image(webrtc_ctx.image, channels="GRAY")
+
+if __name__ == "__main__":
+    main()
