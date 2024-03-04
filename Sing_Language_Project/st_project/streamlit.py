@@ -22,8 +22,7 @@ def main():
         async_transform=True,
     )
 
-    if webrtc_ctx.video_transformer:
-        st.image()
+    
 
 if __name__ == "__main__":
     main()
