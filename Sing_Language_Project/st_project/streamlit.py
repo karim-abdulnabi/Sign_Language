@@ -1,11 +1,14 @@
+import cv2
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
 
-# Create a custom video transformer class
-class VideoTransformer(VideoTransformerBase):
-    def transform(self, frame):
-        # Display the frame in Streamlit
-        st.image(frame.to_ndarray(format="bgr24"), channels="BGR", use_column_width=True)
+st.title("Webcam Live Feed")
+run = st.checkbox('Run')
+FRAME_WINDOW = st.image([])
+camera = cv2.VideoCapture(0)
 
-# Use webrtc_streamer to open the camera and display the live feed
-webrtc_streamer(key="example", video_processor_factory=VideoTransformer)
+while run:
+    _, frame = camera.read()
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    FRAME_WINDOW.image(frame)
+else:
+    st.write('Stopped')
