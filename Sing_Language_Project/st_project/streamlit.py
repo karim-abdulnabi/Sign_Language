@@ -27,12 +27,12 @@ def main():
     webrtc_ctx = webrtc_streamer(
         key="example",
         video_transformer_factory=VideoTransformer,
-        async_transform=True,
+        async_processing=True,
     )
 
     if webrtc_ctx.video_transformer:
         # Display the processed video
-        st.image(webrtc_ctx.video_transformer.get_frame())
+        st.image(webrtc_ctx.video_transformer.frame_out)
 
 if __name__ == "__main__":
     main()
