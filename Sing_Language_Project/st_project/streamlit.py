@@ -8,4 +8,4 @@ class VideoTransformer(VideoTransformerBase):
         st.image(frame.to_ndarray(format="bgr24"), channels="BGR", use_column_width=True)
 
 # Use webrtc_streamer to open the camera and display the live feed
-webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
+webrtc_streamer(key="example", video_processor_factory=VideoTransformer)
