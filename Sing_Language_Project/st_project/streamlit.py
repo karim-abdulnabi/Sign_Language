@@ -1,35 +1,29 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, WebRtcMode
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, WebRtcMode
+import av
+import cv2
+import numpy as np
 
-# Define a VideoProcessor class to process video frames
-class VideoProcessor(VideoProcessorBase):
-    def __init__(self):
-        # Initialize any required resources or settings
-        pass
-
-    def process_video_frame(self, frame):
-        # Perform any image processing if needed
+class VideoTransformer(VideoTransformerBase):
+    def transform(self, frame):
+        img = frame.to_ndarray(format="bgr24")
+        # Perform any image processing here
         # For example, you can convert the frame to grayscale
-        grayscale_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        return gray_img
 
-        # Return the processed frame
-        return grayscale_frame
-
-# Streamlit app
 def main():
     st.title("Webcam Video Recorder")
 
-    # Use webrtc_streamer to display the webcam feed and processed video
     webrtc_ctx = webrtc_streamer(
         key="example",
-        video_processor_factory=VideoProcessor,
+        video_transformer_factory=VideoTransformer,
         mode=WebRtcMode.SENDRECV,
-        async_processing=True,
+        async_transform=True,
     )
 
-    if webrtc_ctx.video_processor:
-        # Display the processed video
-        st.image(webrtc_ctx.frame_out)
+    if webrtc_ctx.video_transformer:
+        st.image(webrtc_ctx.video_transformer.frame_out, channels="GRAY")
 
 if __name__ == "__main__":
     main()
